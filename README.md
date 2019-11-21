@@ -56,3 +56,19 @@ We use the id of the div with a dot notation 'innerHTML' to inject a variable in
 ```
 tweetHolder.innerHTML = output;
 ```
+## 5. Implement fetch
+
+Fetch is an alternative to jQuery, which is built directly into javascript.
+
+Firstly declare the getTweets function as asynchronous.
+```
+async function getTweets()
+```
+
+Then create the myJson object, which will hold the JSON response from the API.
+```
+const response = await fetch("http://localhost:3000/tweets.json");
+const myJson = await response.json();
+```
+
+Then iterate through the myJson object and extract the messages, save them under a variable called output, and inject the output variable into the HTML document.
