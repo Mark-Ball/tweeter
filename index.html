@@ -11,20 +11,19 @@
     <button>Get tweets</button>
     <div id="tweetHolder"></div>
     <script>
-        let container = document.getElementById("tweetHolder");
         document.querySelector("button").addEventListener("click", getTweets);
 
-        function getTweets() {
-            $.get("http://localhost:3000/tweets.json", (response) => {
-                console.log(response);
-                let output = '';
-                response.forEach((tweet) => {
-                    output += `<li>${tweet.message}</li>`;
-                });
+        async function getTweets() {
+            const response = await fetch("http://localhost:3000/tweets.json");
+            const myJson = await response.json();
+
+            let output = '';
+            for (i of myJson) {
+                output += `<li>${i.message}</li>`;
+            }
 
             tweetHolder.innerHTML = output;
 
-            });
         }
     </script>
 </body>
