@@ -34,16 +34,49 @@
 
         }
 
+        // async function postTweet() {
+        //     let message = document.querySelector("#tweet").value;
+        //     event.preventDefault();
+
+        //     // insert must be of Node Element type to be used in the insertBefore method
+        //     let insert = document.createElement("li");
+        //     insert.innerHTML = `${message}`;
+        //     let firstLi = document.querySelector("li");
+
+        //     document.querySelector("#tweetHolder").insertBefore(insert, firstLi);
+        // }
+
+        // what if we want to use fetch to send a post to the server?
         async function postTweet() {
-            let message = document.querySelector("#tweet").value;
             event.preventDefault();
 
-            // insert must be of Node Element type to be used in the insertBefore method
-            let insert = document.createElement("li");
-            insert.innerHTML = `${message}`;
-            let firstLi = document.querySelector("li");
+            let url = "http://localhost:3000/tweets.json";
 
-            document.querySelector("#tweetHolder").insertBefore(insert, firstLi);
+            let message = document.querySelector("#tweet").value;
+            data = { tweet: { message: "new tweet" } };
+
+            // ajax version of a POST
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: data,
+                success: data => {
+                    console.log(data);
+                },
+                error: error => {
+                    console.log("Error");
+                    console.log(error);
+                }
+            })
+
+            // fetch(url, {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     mode: 'no-cors',
+            //     body: JSON.stringify(data)
+            // });
         }
     </script>
 </body>
