@@ -37,25 +37,10 @@
             event.preventDefault();
 
             let message = document.querySelector("#tweet").value;
-            data = { tweet: { message: `${message}` } };
 
             axios.post("http://localhost:3000/tweets", {
                 tweet: { message: `${message}` }
             });
-
-            // ajax version of a POST
-            // $.ajax({
-            //     url: url,
-            //     type: "POST",
-            //     data: data,
-            //     success: data => {
-            //         console.log(data);
-            //     },
-            //     error: error => {
-            //         console.log("Error");
-            //         console.log(error);
-            //     }
-            // })
         }
     </script>
 </body>
