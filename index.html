@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Document</title>
-    <script src="jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
     <form>
@@ -21,62 +21,55 @@
         document.querySelector("input[type=submit]").addEventListener("click", postTweet);
 
         async function getTweets() {
-            const response = await fetch("http://localhost:3000/tweets.json");
-            const myJson = await response.json();
+            let response = await axios.get("http://localhost:3000/tweets.json");
 
-            let output = '';
+            let tweets = response.data;
+            let output = "";
 
-            for (i of myJson) {
-                output += `<li>${i.message}</li>`;
+            for (tweet of tweets) {
+                output += `<li>${tweet.message}</li>`;
             }
 
             tweetHolder.innerHTML = output;
-
         }
 
-        // async function postTweet() {
-        //     let message = document.querySelector("#tweet").value;
-        //     event.preventDefault();
-
-        //     // insert must be of Node Element type to be used in the insertBefore method
-        //     let insert = document.createElement("li");
-        //     insert.innerHTML = `${message}`;
-        //     let firstLi = document.querySelector("li");
-
-        //     document.querySelector("#tweetHolder").insertBefore(insert, firstLi);
-        // }
-
-        // what if we want to use fetch to send a post to the server?
-        async function postTweet() {
+        function postTweet() {
             event.preventDefault();
 
-            let url = "http://localhost:3000/tweets.json";
+            let url = "http://localhost:3000/tweets";
 
             let message = document.querySelector("#tweet").value;
             data = { tweet: { message: `${message}` } };
+            // console.log(JSON.stringify(data));
 
             // ajax version of a POST
-            $.ajax({
-                url: url,
-                type: "POST",
-                data: data,
-                success: data => {
-                    console.log(data);
-                },
-                error: error => {
-                    console.log("Error");
-                    console.log(error);
-                }
-            })
-
-            // fetch(url, {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json"
+            // $.ajax({
+            //     url: url,
+            //     type: "POST",
+            //     data: data,
+            //     success: data => {
+            //         console.log(data);
             //     },
-            //     mode: 'no-cors',
-            //     body: JSON.stringify(data)
-            // });
+            //     error: error => {
+            //         console.log("Error");
+            //         console.log(error);
+            //     }
+            // })
+
+            
+            
+            const request = new Request(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({"tweet": {"message": "1234"}})
+            })
+            console.log(request);
+            fetch(request)
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
         }
     </script>
 </body>
