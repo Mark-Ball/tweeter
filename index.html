@@ -36,11 +36,12 @@
         function postTweet() {
             event.preventDefault();
 
-            let url = "http://localhost:3000/tweets";
-
             let message = document.querySelector("#tweet").value;
             data = { tweet: { message: `${message}` } };
-            // console.log(JSON.stringify(data));
+
+            axios.post("http://localhost:3000/tweets", {
+                tweet: { message: `${message}` }
+            });
 
             // ajax version of a POST
             // $.ajax({
@@ -55,21 +56,6 @@
             //         console.log(error);
             //     }
             // })
-
-            
-            
-            const request = new Request(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({"tweet": {"message": "1234"}})
-            })
-            console.log(request);
-            fetch(request)
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err))
         }
     </script>
 </body>
