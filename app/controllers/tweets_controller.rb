@@ -1,5 +1,6 @@
 class TweetsController < ApplicationController
   before_action :set_tweet, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token
 
   # GET /tweets
   # GET /tweets.json
@@ -24,6 +25,7 @@ class TweetsController < ApplicationController
   # POST /tweets
   # POST /tweets.json
   def create
+    puts "*** #{params} ***"
     @tweet = Tweet.new(tweet_params)
 
     respond_to do |format|
