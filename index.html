@@ -16,12 +16,18 @@
 
     <button>Get tweets</button>
     <div id="tweetHolder"></div>
+
+    <button id="delete-button">Delete tweet</button>
+
     <script>
         document.querySelector("button").addEventListener("click", getTweets);
         document.querySelector("input[type=submit]").addEventListener("click", postTweet);
+        document.querySelector("#delete-button").addEventListener("click", deleteTweet);
+
 
         async function getTweets() {
             let response = await axios.get("http://localhost:3000/tweets.json");
+            console.log(response);
 
             let tweets = response.data;
             let output = "";
@@ -41,6 +47,12 @@
             axios.post("http://localhost:3000/tweets", {
                 tweet: { message: `${message}` }
             });
+        }
+
+        function deleteTweet() {
+            event.preventDefault();
+
+            axios.delete("http://localhost:3000/tweets/18");
         }
     </script>
 </body>
